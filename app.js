@@ -18,8 +18,12 @@
 
   // --- Filtros ---
   let cat = "Todo", modelo = "Todos";
-  const modelos = [...new Set(C.productos.flatMap((p) => p.modelos || []))].sort();
-  $("#selModelo").innerHTML = ["Todos", ...modelos].map((m) => `<option>${m}</option>`).join("");
+  let modelos = [];
+  function armarModelos() {
+    modelos = [...new Set(C.productos.flatMap((p) => p.modelos || []))].sort();
+    if (modelo !== "Todos" && !modelos.includes(modelo)) modelo = "Todos";
+    $("#selModelo").innerHTML = ["Todos", ...modelos].map((m) => `<option ${m === modelo ? "selected" : ""}>${m}</option>`).join("");
+    }
   $("#selModelo").onchange = (e) => { modelo = e.target.value; pintar(); };
   const pintarChips = () => {
     $("#chipsCat").innerHTML = ["Todo", ...C.categorias].map((c) => `<button class="chip" aria-pressed="${c === cat}" data-c="${c}">${c}</button>`).join("");
@@ -41,11 +45,11 @@
         ? `<select aria-label="Modelo de ${p.nombre}" data-sel="${p.id}">${p.modelos.map((m) => `<option ${m === modelo ? "selected" : ""}>${m}</option>`).join("")}</select>`
         : p.modelos ? `<p class="compat">Para ${p.modelos[0]}</p>` : p.opciones
         ? `<select aria-label="Opción de ${p.nombre}" data-sel="${p.id}">${p.opciones.map((o) => `<option>${o}</option>`).join("")}</select>` : "";
-      return `<article class="card">
-        ${p.etiqueta ? `<span class="tag">${p.etiqueta}</span>` : ""}
+      return `<article class="card${p.agotado ? " agotado" : ""}">
+        ${p.agotado ? `<span class="tag tag-out">Agotado</span>` : p.etiqueta ? `<span class="tag">${p.etiqueta}</span>` : ""}
         <div class="card-img"><img src="${p.foto}" width="${p.w}" height="${p.h}" alt="${p.nombre}" ${i > 1 ? 'loading="lazy"' : ""}></div>
         <div class="card-body"><h3>${p.nombre}</h3><p class="desc">${p.descripcion}</p><p class="precio">${money(p.precio)}</p>${sel}
-        <button class="btn btn-gold" data-add="${p.id}">Agregar al pedido</button></div></article>`;
+        <button class="btn btn-gold" data-add="${p.id}" ${p.agotado ? "disabled" : ""}>${p.agotado ? "Agotado" : "Agregar al pedido"}</button></div></article>`;
     }).join("");
   }
   $("#grilla").onclick = (e) => {
@@ -131,5 +135,6 @@
     })(0);
   }
 
-  pintarChips(); pintar(); pintarCarrito();
+  window.CasesShop = { refresh() { cart = cart.filter((i) => prod(i.id)); armarModelos(); pintar(); pintarCarrito(); }, abrirCatalogo() { $("#catalogo").scrollIntoView(); } };
+  armarModelos(); pintarChips(); pintar(); pintarCarrito();
 })();

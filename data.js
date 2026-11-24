@@ -50,3 +50,10 @@ const CONFIG = {
     descripcion: "Cases Import en Neuquén: fundas lindas, cargadores y battery packs para iPhone. Elegí tu modelo, armá tu pedido y mandalo por WhatsApp. Envíos a todo el país.",
   },
 };
+
+// --- Panel administrativo (demo) ---
+// Copia de los productos originales (para "Restablecer demo") y, si ella editó algo
+// desde el panel, se cargan sus cambios guardados en este navegador.
+const PRODUCTOS_DEMO = JSON.parse(JSON.stringify(CONFIG.productos));
+const PANEL_KEY = "casesimport-productos";
+try { const g = JSON.parse(localStorage.getItem(PANEL_KEY)); if (Array.isArray(g) && g.length) CONFIG.productos = g; } catch (e) {}

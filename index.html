@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="panel.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Store","name":"Cases Import","description":"Cases y accesorios para celulares. Envíos a todo el país.","telephone":"+5492993255217","address":{"@type":"PostalAddress","addressLocality":"Neuquén","addressCountry":"AR"},"sameAs":["https://instagram.com/casesimportt"],"image":"img/og.webp"}
 </script>
@@ -33,6 +34,7 @@
     <a href="#combo">Combo</a>
     <a href="#como-comprar">Cómo comprar</a>
     <a href="#envios">Envíos</a>
+    <a href="#panel" class="nav-panel">Panel administrativo</a>
   </nav>
   <button class="cart-btn" id="abrirCarrito" aria-label="Ver mi pedido">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
@@ -113,7 +115,7 @@
 <footer class="foot">
   <p class="script foot-brand">Cases Import</p>
   <p>Cases &amp; accesorios para celulares · Neuquén, Argentina</p>
-  <p><a data-wa href="#" id="telFoot">WhatsApp</a> · <a id="igFoot" target="_blank" rel="noopener" href="#">Instagram</a></p>
+  <p><a data-wa href="#" id="telFoot">WhatsApp</a> · <a id="igFoot" target="_blank" rel="noopener" href="#">Instagram</a> · <a href="#panel">Panel administrativo</a></p>
   <p class="credit">© <span id="anio"></span> Cases Import · Web hecha por <a href="https://vigolowebstudio.com" target="_blank" rel="noopener">Vigolo Web Studio</a></p>
 </footer>
 
@@ -150,7 +152,10 @@
   </div>
 </aside>
 
+<div class="panel" id="panel" hidden></div>
+
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="panel.js"></script>
 </body>
 </html>
