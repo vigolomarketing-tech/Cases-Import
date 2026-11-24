@@ -26,6 +26,9 @@
   };
   $("#chipsCat").onclick = (e) => { const b = e.target.closest("[data-c]"); if (!b) return; cat = b.dataset.c; pintarChips(); pintar(); };
 
+  $("#heroModelos").innerHTML = ["iPhone 16 Pro Max", "iPhone 17", "iPhone 17 Pro", "iPhone 18 Pro Max"].filter((m) => modelos.includes(m)).map((m) => `<a href="#catalogo" data-m="${m}">${m}</a>`).join("");
+  $("#heroModelos").onclick = (e) => { const a = e.target.closest("[data-m]"); if (a) { modelo = a.dataset.m; $("#selModelo").value = modelo; cat = "Todo"; pintarChips(); pintar(); } };
+
   const visibles = () => C.productos.filter((p) =>
     (cat === "Todo" || p.categoria === cat) && (modelo === "Todos" || !p.modelos || p.modelos.includes(modelo)));
 
