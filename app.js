@@ -108,5 +108,25 @@
     window.open(wa(msg), "_blank", "noopener");
   };
 
+  // --- Hero 3D: sigue el dedo/mouse y, si no, se mece solo ---
+  const rig = $("#rig"), hero = $(".hero");
+  if (rig && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let tx = 0, ty = 0, cx = 0, cy = 0, activo = false;
+    hero.addEventListener("pointermove", (e) => {
+      const r = $("#stage").getBoundingClientRect();
+      ty = ((e.clientX - r.left) / r.width - 0.5) * 36;
+      tx = -((e.clientY - r.top) / r.height - 0.5) * 22;
+      activo = true;
+    });
+    hero.addEventListener("pointerleave", () => (activo = false));
+    (function loop(t) {
+      if (!activo) { ty = Math.sin(t / 1800) * 12; tx = Math.cos(t / 2300) * 5; }
+      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+      rig.style.setProperty("--rx", cx.toFixed(2) + "deg");
+      rig.style.setProperty("--ry", cy.toFixed(2) + "deg");
+      requestAnimationFrame(loop);
+    })(0);
+  }
+
   pintarChips(); pintar(); pintarCarrito();
 })();
